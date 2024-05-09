@@ -1,0 +1,71 @@
+{% extends 'seller-header.html' %}
+<!-- FOR LOADING THE STATIC FOLDER -->
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+</head>
+
+<body>
+    
+        
+        
+        
+
+        <!-- ****** New Arrivals Area Start ****** -->
+        <section class="new_arrivals_area section_padding_100_0 clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section_heading text-center">
+                            <h2>my products</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="karl-projects-menu mb-100">
+                <div class="text-center portfolio-menu">
+                    <button class="btn active" onclick="window.location.href= {% url 'seller-index' %}">Home</button>
+                    <button class="btn " onclick="window.location.href= {% url 'seller-add-product' %};">ADD PRODUCTS</button>
+                    <button class="btn" onclick="window.location.href={% url 'seller-view-product' %}">VIEW PRODUCTS</button>
+                    <button class="btn" data-filter=".man">REMOVE PRODUCTS</button>
+                    
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row karl-new-arrivals">
+
+                    {% for i in products %}
+                    <!-- Single gallery Item Start -->
+                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="{{i.product_image.url}}" alt="">
+                            
+                        </div>
+                        <!-- Product Description -->
+                        <div class="product-description">
+
+                            <h4 class="product-price">Rs. {{i.product_price}}</h4>
+                            <p>{{i.product_name}}</p>
+                            <!-- Add to Cart -->
+                            <a href="{% url 'seller-product-details' pk=i.pk %}" class="add-to-cart-btn">Details</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+        </section>
+        <!-- ****** New Arrivals Area End ****** -->
+
+        
+</body>
+
+</html>
+{% endblock %}

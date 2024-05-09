@@ -1,0 +1,95 @@
+{% extends 'header.html' %}
+<!-- FOR LOADING THE STATIC FOLDER -->
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+</head>
+
+<body>
+    
+        
+        
+        
+
+        
+        <section class="new_arrivals_area section_padding_100_0 clearfix">
+
+            <div class="container" >
+                <div class="row karl-new-arrivals" >
+
+                    <!-- Single gallery Item Start -->
+                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s" >
+                        <!-- Product Image -->
+                        <div class="product-img" >
+                            <img src="{{ product.product_image.url }}" alt="">
+                            
+                        </div>
+
+                        
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <h5 align="center">{{product.product_category}}</h5>
+                            <h4 class="product-price" align="center">RS. {{ product.product_price }}</h4><br>
+                            <b align="center"><h6>{{ product.product_name }}</h6></b><br>
+                            <p align="center">{{ product.product_desc }}</p><br><br>
+                            
+
+                            <!-- for adding spaces -->
+                            <div>
+
+                             <!-- for dynamic buttom for removing and adding products in wishlist -->
+
+                            {% if wishlist_flag == True %}   
+                            
+                                <a href="{% url 'remove-from-wishlist' pk=product.pk %}" >
+                                <button class="btn btn-danger " >
+                                    Remove From  <span style="font-size: 110%;">&hearts;</span>
+                                </button>
+                                </a>
+
+                            {% else %}
+                                &emsp;
+                                <a href="{% url 'add-to-wishlist' pk=product.pk %}" >
+                                <button class="btn btn-primary " >
+                                    Add To Wishlist
+                                </button>
+                                </a>
+
+                            {% endif %}
+                            &emsp;
+                            {% if cart_flag == True %}   
+                            
+                                <a href="{% url 'remove-from-cart' pk=product.pk %}" >
+                                <button class="btn btn-danger " >
+                                    Remove From Cart
+                                </button>
+                                </a>
+
+                            {% else %}
+                                &emsp;&emsp;
+                                <a href="{% url 'add-to-cart' pk=product.pk %}" >
+                                <button class="btn btn-primary " >
+                                    Add To Cart
+                                </button>
+                                </a>
+
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </section>
+        <!-- ****** New Arrivals Area End ****** -->
+
+        
+</body>
+
+</html>
+{% endblock %}

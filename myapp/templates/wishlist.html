@@ -1,0 +1,78 @@
+{% extends 'header.html' %}
+<!-- FOR LOADING THE STATIC FOLDER -->
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+</head>
+
+<body>
+    
+        
+        
+        <!-- ****** New Arrivals Area Start ****** -->
+        <section class="new_arrivals_area section_padding_100_0 clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section_heading text-center">
+                            <h2>MY WISHLIST</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="container">
+                <div class="row karl-new-arrivals">
+
+                    
+
+
+                    <!-- Single gallery Item Start -->
+                    {% for i in wishlist %}
+                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item shoes wow fadeInUpBig" data-wow-delay="0.5s">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="{{i.product.product_image.url}}" height="300px" width="150px" alt="">
+                            
+                        </div>
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <h4 class="product-price">Rs. {{i.product.product_price}}</h4>
+                            <p>{{i.product.product_name}}</p>
+                            
+                           
+                        </div>
+                        &emsp;
+
+                        <div class="=product-btns">&emsp;&emsp;&emsp;&emsp;
+                            {% if i.product.wishlist_status == False %}
+                            <a href="{% url 'add-to-wishlist' pk=i.product.pk %}" class="visible" title="Add To Wishlist"><i class="fa fa-heart"></i></a>
+                            &emsp;&emsp;&emsp;&emsp;
+                            {% else %}
+                                <a href="{% url 'remove-from-wishlist' pk=i.product.pk %}" class="visible" title="Remove From Wishlist"><i class="fa fa-heart" style="color:red;"></i></a>
+                                &emsp;&emsp;&emsp;&emsp;
+
+                            {% endif %}
+                            <a href="{% url 'product-details' pk=i.product.pk %}" class="visible" title="Details"><i class="fa fa-eye"></i></a>
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+        </section>
+        <!-- ****** New Arrivals Area End ****** -->
+
+
+
+</body>
+
+</html>
+{% endblock %}

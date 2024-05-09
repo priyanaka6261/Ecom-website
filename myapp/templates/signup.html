@@ -1,0 +1,144 @@
+{% extends 'header.html' %}
+<!-- FOR LOADING THE STATIC FOLDER -->
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+
+</head>
+
+<body>
+    
+        <!-- ****** Checkout Area Start ****** -->
+        <div class="checkout_area section_padding_100">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 col-md-6">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-page-heading">
+                                <h5>SignUp</h5>
+                                {% if msg %}
+                                    <b style="color: red;">{{msg}}</b>
+                                {% endif %}
+                                
+                            </div>
+
+                            <form name="signup" action="{% url 'signup' %}" method="post" enctype="multipart/form-data" >
+                                {% csrf_token %}
+                                <div class="row">
+                                    
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="fname">First Name <span>*</span></label>
+                                        <input type="text" class="form-control" id="fname" name="fname" value="" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lname">Last Name <span>*</span></label>
+                                        <input type="text" class="form-control" id="lname" name='lname' value="" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <select class="form-control" name="usertype">
+                                            <option>---Select User Type---</option>
+                                            <option value="buyer">Buyer</option>
+                                            <option value="seller">Seller</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="email">Email<span>*</span></label>
+                                        <input type="text" class="form-control" id="email" name='email' value="">
+                                        <span id="email_error"></span>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-3">
+                                        <label for="mobile">Mobile <span>*</span></label>
+                                        <input type="text" class="form-control" id="mobile" name="mobile" min="0" value="">
+                                        <span id="mobile_error"></span>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="address">Address <span>*</span></label>
+                                        <input type="text" class="form-control mb-3" id="address" name="address" value="">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="password">Password<span>*</span></label>
+                                        <input type="password" class="form-control mb-3" id="password" name="password" value="">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="cpassword">Confirm Password<span>*</span></label>
+                                        <input type="password" class="form-control mb-3" id="cpassword" name="cpassword" value="">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="profile_pic">Profile Picture<span>*</span></label>
+                                        <input type="file" class="form-control mb-3" id="profile_pic" name="profile_pic" >
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="submit" class="btn btn-primary" value="SignUp">
+                                    </div>
+
+                                    
+
+                                    
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+</body>
+
+<!-- AJAX script to validate Email -->
+<script>
+    $("#email").change(function(){
+        var email=$(this).val();
+
+        $.ajax({
+            /* Put this URL in your urls.py file */
+            url: '/ajax/validate_email/',
+            data: {
+                'email' : email
+            },
+            dataType: 'json',
+            success: function(data){
+                if(data.is_taken){
+                    document.getElementById("email_error").innerHTML="This Email is Already Registered"
+                }else{
+                    document.getElementById("email_error").innerHTML="";
+                }
+            }
+        });
+    });
+
+</script>
+
+<!-- AJAX script to validate Mobile -->
+<script>
+    $("#mobile").change(function(){
+        var mobile=$(this).val();
+
+        $.ajax({
+            /* Put this URL in your urls.py file */
+            url: '/ajax/validate_mobile/',
+            data: {
+                'mobile' : mobile
+            },
+            dataType: 'json',
+            success: function(data){
+                if(data.is_taken){
+                    document.getElementById("mobile_error").innerHTML="This Mobile Number is Already Registered"
+                }else{
+                    document.getElementById("mobile_error").innerHTML="";
+                }
+            }
+        });
+    });
+
+</script>
+
+</html>
+
+{% endblock %}

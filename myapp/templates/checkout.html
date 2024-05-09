@@ -1,0 +1,145 @@
+{% extends 'header.html' %}
+<!-- FOR LOADING THE STATIC FOLDER -->
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+    
+        <section class="top-discount-area d-md-flex align-items-center">
+            <!-- Single Discount Area -->
+            <div class="single-discount-area">
+                <h5>Free Shipping &amp; Returns</h5>
+                <h6><a href="#">BUY NOW</a></h6>
+            </div>
+            <!-- Single Discount Area -->
+            <div class="single-discount-area">
+                <h5>20% Discount for all dresses</h5>
+                <h6>USE CODE: Colorlib</h6>
+            </div>
+            <!-- Single Discount Area -->
+            <div class="single-discount-area">
+                <h5>20% Discount for students</h5>
+                <h6>USE CODE: Colorlib</h6>
+            </div>
+        </section>
+
+        <!-- ****** Checkout Area Start ****** -->
+        <div class="checkout_area section_padding_100">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 col-md-6">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-page-heading">
+                                <h5>Billing Address</h5>
+                                
+                            </div>
+
+                            <form action="#" method="post">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="first_name">First Name </label>
+                                        <input type="text" class="form-control" id="first_name" value="{{user.fname}}" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="last_name">Last Name </label>
+                                        <input type="text" class="form-control" id="last_name" value="{{user.lname}}" required>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="email">Email</label>
+                                        <input type="text" class="form-control" id="email" value="{{user.email}}">
+                                    </div>
+                                    
+                                    <div class="col-12 mb-3">
+                                        <label for="address">Address </label>
+                                        <input type="text" class="form-control mb-3" id="address" value="{{user.address}}">
+                                        
+                                    </div>
+                                    
+                                    <div class="col-12 mb-3">
+                                        <label for="mobile">Mobile<span>*</span></label>
+                                        <input type="number" class="form-control" id="mobile" min="0" value="{{user.mobile}}">
+                                    </div>
+                                    
+
+                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
+                        <div class="order-details-confirmation">
+
+                            <div class="cart-page-heading">
+                                <h5>Your Order</h5>
+                                <p>The Details</p>
+                            </div>
+
+                            <ul class="order-details-form mb-4">
+                                <li><span>Product</span> <span>Total</span></li>
+                                {% for i in cart %}
+                                <li><span>{{i.product_qty}} X {{i.product.product_name}}</span> <span>Rs.{{i.product_price}}</span></li>
+                                {% endfor %}
+                                <li><span>Subtotal</span> <span>Rs.{{net_price}}</span></li>
+                                <li><span>Shipping</span> <span>Free</span></li>
+                                <li><span>Total</span> <span>Rs.{{net_price}}</span></li>
+                            </ul>
+                            
+                            <form method="post">
+                                <input type="hidden" id="net_price" name="amount" value="{{net_price}}">
+                                <button type="button" class="btn btn-lg btn-primary" id="checkout-button">Checkout</button>
+                            </form>
+                            
+
+
+                            
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- ****** Checkout Area End ****** -->
+
+<script type="text/javascript">
+    var stripe = Stripe('pk_test_51Mz19dSJPjNQbruHsVFa8L5JahJxexaDwi44Ha9NnTovGvvBWGG3z0d6MKV3x2j4DzYWuWuPUn23362SWfuaNBiL005xI0IPOU');
+    var checkoutButton = document.getElementById('checkout-button');
+    checkoutButton.addEventListener('click', function() {
+        fetch('/create-checkout-session/', {
+            method: 'POST',
+            headers:{
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest', 
+            },
+            body: JSON.stringify({'post_data':'{{net_price}}'})
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(session) {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function(result) {
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+        });
+    });
+</script>
+</body>
+
+</html>
+
+{% endblock %}

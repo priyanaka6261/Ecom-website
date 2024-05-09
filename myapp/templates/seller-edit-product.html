@@ -1,0 +1,117 @@
+{% extends 'seller-header.html' %}
+<!-- FOR LOADING THE STATIC FOLDER -->
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+
+</head>
+
+<body>
+    <section class="new_arrivals_area section_padding_100_0 clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section_heading text-center">
+                            <h2>Edit Product</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="karl-projects-menu mb-100">
+                <div class="text-center portfolio-menu">
+                    <button class="btn" onclick="window.location.href = {% url 'seller-index' %};">Home</button>
+                    <button class="btn  " onclick="window.location.href= {% url 'seller-add-product' %};">ADD PRODUCTS</button>
+                    <button class="btn active" onclick="window.location.href = {% url 'seller-view-product' %};">VIEW PRODUCTS</button>
+                    <button class="btn" data-filter=".man">REMOVE PRODUCTS</button>
+                    
+                </div>
+            </div>
+    </section>      
+    <section>
+        <!-- ****** Checkout Area Start ****** -->
+        <div class="checkout_area section_padding_100">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 col-md-6">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-page-heading">
+                                <h5>Edit Product</h5>
+                                {% if msg %}
+                                    <b style="color: red;">{{msg}}</b>
+                                {% endif %}
+                                
+                            </div>
+
+                            <form name="add-product" action="{% url 'seller-edit-product' pk=product.pk %}" method="post" enctype="multipart/form-data" >
+                                {% csrf_token %}
+                                <div class="row">
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <select class="form-control" name="product_category">
+                                            {% if product.product_category == "Men" %}
+                                                <option>---Select Product Category---</option>
+                                                <option value="Men" selected>Men</option>
+                                                <option value="Women">Women</option>
+
+                                            {% else %}
+                                                <option>---Select Product Category---</option>
+                                                <option value="Men">Men</option>
+                                                <option value="Women" selected>Women</option>
+                                            {% endif %}
+
+                                        </select>
+                                    </div>
+                                    
+                                    
+                                    <div class="col-12 mb-3">
+                                        <label for="product_name">Product Name</label>
+                                        <input type="text" class="form-control" id="product_name" name='product_name' value="{{product.product_name}}">
+                                    </div>
+                                    
+                                    <div class="col-12 mb-3">
+                                        <label for="product_desc">Description </label>
+                                        <input type="text" class="form-control" id="product_desc" name="product_desc" min="0" value="{{product.product_desc}}">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="product_price">Price</label>
+                                        <input type="text" class="form-control mb-3" id="product_price" name="product_price" value="{{product.product_price}}">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <img src="{{product.product_image.url}}" height="50px" width="75px">
+                                        
+                                    </div>
+                                    
+                                    <div class="col-12 mb-3">
+                                        <label for="product_image">Product Image</label>
+                                        <input type="file" class="form-control mb-3" id="product_image" name="product_image" >
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="submit" class="btn btn-primary" value="Update Product">
+                                    </div>
+
+                                    
+
+                                    
+                                </div>
+                        
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+
+{% endblock %}

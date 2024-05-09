@@ -1,0 +1,86 @@
+{% extends 'seller-header.html' %}
+<!-- FOR LOADING THE STATIC FOLDER -->
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+</head>
+
+<body>
+    
+        
+        
+        
+
+        
+        <section class="new_arrivals_area section_padding_100_0 clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section_heading text-center">
+                            <h2>my products</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="karl-projects-menu mb-100">
+                <div class="text-center portfolio-menu">
+                    <button class="btn " onclick="window.location.href= {% url 'seller-index' %}">Home</button>
+                    <button class="btn " onclick="window.location.href= {% url 'seller-add-product' %};">ADD PRODUCTS</button>
+                    <button class="btn" onclick="window.location.href={% url 'seller-view-product' %}">VIEW PRODUCTS</button>
+                    <button class="btn" data-filter=".man">REMOVE PRODUCTS</button>
+                    
+                </div>
+            </div>
+
+            <div class="container" >
+                <div class="row karl-new-arrivals" >
+
+                    <!-- Single gallery Item Start -->
+                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.2s" >
+                        <!-- Product Image -->
+                        <div class="product-img" >
+                            <img src="{{ product.product_image.url }}" alt="">
+                            
+                        </div>
+
+                        
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <h5 align="center">{{product.product_category}}</h5>
+                            <h4 class="product-price" align="center">RS. {{ product.product_price }}</h4><br>
+                            <b align="center"><h6>{{ product.product_name }}</h6></b><br>
+                            <p align="center">{{ product.product_desc }}</p><br>
+                            
+                            <!-- for adding spaces -->
+                            <div>&emsp;&emsp;&emsp;&emsp;
+                            <a href="{% url 'seller-edit-product' pk=product.pk %}" >
+                            <button class="btn btn-primary " >
+                                <i class="fa fa-edit"></i><span class="tooltipp"> Edit</span>
+                            </button>
+                            </a>
+                            &emsp;
+                            <a href="{% url 'seller-delete-product' pk=product.pk %}">
+                            <button class="btn btn-primary">
+                                <i class="fa fa-trash"></i><span class="tooltipp"> Remove</span>
+                            </button>
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </section>
+        <!-- ****** New Arrivals Area End ****** -->
+
+        
+</body>
+
+</html>
+{% endblock %}

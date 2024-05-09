@@ -1,0 +1,95 @@
+{% extends 'header.html' %}
+<!-- FOR LOADING THE STATIC FOLDER -->
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+
+</head>
+
+<body>
+    
+        <!-- ****** Checkout Area Start ****** -->
+        <div class="checkout_area section_padding_100">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 col-md-6">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-page-heading">
+                                <h5>Profile</h5>
+                                {% if msg %}
+                                    <b style="color: red;">{{msg}}</b>
+                                {% endif %}
+                                
+                            </div>
+
+                            <form name="profile" action="{% url 'profile' %}" method="post" enctype="multipart/form-data" >
+                                {% csrf_token %}
+                                <div class="row">
+                                    
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="fname">First Name </label>
+                                        <input type="text" class="form-control" id="fname" name="fname" value="{{user.fname}}" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lname">Last Name </label>
+                                        <input type="text" class="form-control" id="lname" name='lname' value="{{user.lname}}" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <select class="form-control" name="usertype">
+                                            {% if user.usertype == "buyer" %}
+                                            <option>---Select User Type---</option>
+                                            <option value="buyer" selected>Buyer</option>
+                                            <option value="seller">Seller</option>
+                                            {% else %}
+                                            <option>---Select User Type---</option>
+                                            <option value="buyer">Buyer</option>
+                                            <option value="seller" selected>Seller</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="email">Email</label>
+                                        <input type="text" class="form-control" id="email" name='email' readonly value="{{user.email}}">
+                                    </div>
+                                    
+                                    <div class="col-12 mb-3">
+                                        <label for="mobile">Mobile </label>
+                                        <input type="text" class="form-control" id="mobile" name="mobile" min="0" value="{{user.mobile}}">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="address">Address </label>
+                                        <input type="text" class="form-control mb-3" id="address" name="address" value="{{user.address}}">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <img src="{{user.profile_pic.url}}" height="100px" width="100px">
+                                    </div>                                    
+                                    <div class="col-12 mb-3">
+                                        <label for="profile_pic">Profile Picture</label>
+                                        <input type="file" class="form-control mb-3" id="profile_pic" name="profile_pic" >
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="submit" class="btn btn-primary" value="Update Profile">
+                                    </div>
+
+                                    
+
+                                    
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+</body>
+
+</html>
+
+{% endblock %}
